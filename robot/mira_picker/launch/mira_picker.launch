@@ -1,0 +1,17 @@
+<launch>
+  <!-- Load the robot description -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find mira_picker)/urdf/mira_picker_.urdf.xacro'" />
+
+  <!-- Launch robot_state_publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" value="" />
+  </node>
+
+  <!-- RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find mira_picker)/rviz/default.rviz" required="true" />
+
+  <!-- Static Transform Publisher -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="static_tf_world_to_base"
+        args="0 0 0 0 0 0 world base_link" />
+</launch>
