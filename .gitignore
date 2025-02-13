@@ -1,2 +1,4 @@
 .vscode
 /robot
+/edge_detection/bags/withpointcloud.bag
+/edge_detection/bags/withoutpointcloud.bag 
