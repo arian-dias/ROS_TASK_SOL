@@ -1,54 +1,47 @@
-# Vision Programming Challenge
- 
-## Introduction
-Thank you for agreeing to spend your time solving this programming challenge in the vision domain for us. We will evaluate your solution based on accuracy, code quality, and how clearly you describe your technique.
+# ROS Task Solution - Edge Detection
 
-## Problem Statement
-This task attempts to gain a better understanding of your knowledge of computer vision as well as your programming capability. Edge detection is a preliminary but important step in computer vision. The goal of this challenge is to detect the edges of a checkboard and highlight them with a green line superimposed on the image.
+Welcome to the ROS Task Solution for Edge Detection! This project demonstrates how to process camera images with an edge detection algorithm while also visualizing pointcloud data in RViz. Whether you're an experienced ROS developer or just starting out, this guide will walk you through the process.
 
-Different sample images are provided to test your code with. The ideal solution will be modular, object-oriented, and able to deal with different image sizes and different numbers of squares and their respective sizes. It should also be robust to noise and rotation.
+## How It Works
 
-The different filters used should be implemented in a modular and parameterizable form. Popular image processing libraries like OpenCV, which are open source, can be used. It is ideally expected that the candidate solves the problem using the C++ language. Python can be used, but Matlab is not permitted.
+1. **Image Acquisition:**  
+   The node subscribes to a ROS topic streaming image data from your robot's camera.
 
-## Preliminary Requirements
-1. Install ROS Noetic
-2. Create a catkin workspace
-3. Clone this repository into the src/ directory of your workspace
-4. Ready to work on your code and build. 
+2. **Image Preprocessing:**  
+   Using `cv_bridge`, incoming ROS image messages are converted into OpenCV images, and a Gaussian blur is applied to reduce noise.
 
-    See ROS Tutorials: http://wiki.ros.org/ROS/Tutorials 
+3. **Edge Detection:**  
+   The Canny edge detection algorithm processes the preprocessed images, identifying edges based on rapid changes in brightness.
 
-5. Download bagfiles from a directory that will be shared to you.
+4. **Data Visualization & Transformation:**  
+   Along with edge detection, pointcloud data is visualized in RViz after applying necessary transformations. This provides a comprehensive view of both the image and spatial data.
 
-6. To launch the robot description and bag file:
-    ```
-    # Terminal 1
-    roscore
+## What You Need
 
-    # Terminal 2
-    rosparam set /use_sim_time true
-    source <path to catkin workspace>/devel/setup.bash
-    roslaunch mira_picker display.launch gripper_name:=robotiq2f_140 publish_joint_state:=false publish_robot_state:=false
+Before you begin, make sure you have the following installed:
 
-    # Terminal 3
-    rosbag play --clock -l <path to bagfile>
-    ```
-## Tasks and results
-### 1. Basic 
-For C++, the EdgeDetector.hpp and EdgeDetector.cpp files should be filled in. If any libraries are required, add them to the CMakeLists.txt. For Python, the edge_detector.py file should be filled in. Instructions must also be provided to download and install any required Python packages.
+- **ROS:**  
+  Tested with [ROS Noetic](http://wiki.ros.org/noetic), though it should work with other versions with minimal adjustments.
+  
+- **OpenCV:**  
+  Required for image processing. Install the version that matches your ROS distribution.
 
-It should be possible to provide different images as input to your code and show the output as the image with the edges detected as green lines. Also, provide a Readme.md file detailing instructions on installation, implementation steps, concepts used, and possible improvements. 
+- **cv_bridge:**  
+  Necessary for converting between ROS image messages and OpenCV images.
 
-### 2. Vision_ROS: 
-Provide ROS .srv and .msg files required to create a ROS service for edge detection. Give example usage of this service with a client to detect edges for image files in a directory.
+- **Python:**  
+  Our nodes are written in Python 3 (as used in ROS Noetic). For older ROS versions, ensure compatibility with Python 2 if needed.
+- **To Run**
+  To make sure that you have the necesssary bag files and Robot URDF folder with correct gripper attached to it.
+  For Basic Task: Run Canny_edge_detector.py
+  For Vision_ROS: Run edge_detection_client.py and server
+  For Robot_ROS: Run edge_detection_with_transformation.py
 
-Additionally, detect edges for the images subscribed from an image topic that is available when the given ROS bag (.bag) file is played. The input image and detected edges should be visualised on RViz.
 
-Convert the detected edge pixels from pixel coordinates (u, v) to 3D data (x, y, z) using the depth images and camera parameters also available in the .bag file. Publish the 3D data to a ROS topic (suggestion: of type sensor_msgs/PointCloud), with a topic name edge_points.
+## Getting Started
 
-### 3. Robot_ROS: 
-Extend the code further by visualizing the 3D edge points for each frame as RViz markers together with the visualization of a robot. You can use the robot URDF model provided to visualize the robot and multiple frames of reference. Please provide a video of the markers and the robot on Rviz for a duration of one loop of the given .bag file as part of the submission.
+1. **Clone the Repository into Your ROS Workspace:**
 
-### 4. Advanced: 
-Do all the above tasks.
-
+   ```bash
+   cd ~/catkin_ws/src
+   git clone https://github.com/arian-dias/ROS_TASK_SOL.git
