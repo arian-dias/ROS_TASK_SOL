@@ -1,0 +1,3 @@
+string image_path  # Input: Path to the image file
+---
+sensor_msgs/Image edge_image  # Output: Processed image with detected edges
